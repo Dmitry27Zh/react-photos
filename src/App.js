@@ -13,8 +13,10 @@ const CATEGORIES = [
 function App() {
   const [collections, setCollections] = useState([])
   const [search, setSearch] = useState('')
-  const [activeCategory, setActiveCategory] = useState(1)
+  const [activeCategory, setActiveCategory] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
+    setIsLoading(true)
     const params = `${activeCategory ? `category=${activeCategory}` : ''}`
 
     fetch(`https://6594eb1f04335332df81a971.mockapi.io/photos?${params}`)
@@ -24,6 +26,7 @@ function App() {
         console.error(e)
         alert('Error!')
       })
+      .finally(() => setIsLoading(false))
   }, [activeCategory])
   const filteredCollections = collections.filter((collection) =>
     collection.name.toLowerCase().includes(search.trim().toLowerCase())
@@ -52,9 +55,11 @@ function App() {
         />
       </div>
       <div className="content">
-        {filteredCollections.map((collection) => (
-          <Collection key={crypto.randomUUID()} name={collection.name} photos={collection.photos} />
-        ))}
+        {isLoading
+          ? 'Loading...'
+          : filteredCollections.map((collection) => (
+              <Collection key={crypto.randomUUID()} name={collection.name} photos={collection.photos} />
+            ))}
       </div>
       <ul className="pagination">
         <li>1</li>
