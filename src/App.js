@@ -1,7 +1,18 @@
+import { useEffect, useState } from 'react'
 import './App.css'
 import Collection from './components/Collection'
 
 function App() {
+  const [collections, setCollections] = useState([])
+  useEffect(() => {
+    fetch('https://6594eb1f04335332df81a971.mockapi.io/photos')
+      .then((res) => res.json())
+      .then((data) => setCollections(data))
+      .catch((e) => {
+        console.error(e)
+        alert('Error!')
+      })
+  }, [])
   const photos = [
     'https://images.unsplash.com/photo-1613310023042-ad79320c00ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bW91bmF0aW5zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
   ]
