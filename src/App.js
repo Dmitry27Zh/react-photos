@@ -3,11 +3,11 @@ import './App.css'
 import Collection from './components/Collection'
 
 const CATEGORIES = [
-  { id: 1, name: 'Все' },
-  { id: 2, name: 'Море' },
-  { id: 3, name: 'Горы' },
-  { id: 4, name: 'Архитектура' },
-  { id: 5, name: 'Города' },
+  { id: null, name: 'Все' },
+  { id: 1, name: 'Море' },
+  { id: 2, name: 'Горы' },
+  { id: 3, name: 'Архитектура' },
+  { id: 4, name: 'Города' },
 ]
 
 function App() {
@@ -15,14 +15,16 @@ function App() {
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState(1)
   useEffect(() => {
-    fetch('https://6594eb1f04335332df81a971.mockapi.io/photos')
+    const params = `${activeCategory ? `category=${activeCategory}` : ''}`
+
+    fetch(`https://6594eb1f04335332df81a971.mockapi.io/photos?${params}`)
       .then((res) => res.json())
       .then((data) => setCollections(data))
       .catch((e) => {
         console.error(e)
         alert('Error!')
       })
-  }, [])
+  }, [activeCategory])
   const filteredCollections = collections.filter((collection) =>
     collection.name.toLowerCase().includes(search.trim().toLowerCase())
   )
