@@ -4,6 +4,7 @@ import Collection from './components/Collection'
 
 function App() {
   const [collections, setCollections] = useState([])
+  const [search, setSearch] = useState('')
   useEffect(() => {
     fetch('https://6594eb1f04335332df81a971.mockapi.io/photos')
       .then((res) => res.json())
@@ -25,7 +26,12 @@ function App() {
           <li>Архитектура</li>
           <li>Города</li>
         </ul>
-        <input className="search-input" placeholder="Поиск по названию" />
+        <input
+          className="search-input"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Поиск по названию"
+        />
       </div>
       <div className="content">
         {collections.map((collection) => (
