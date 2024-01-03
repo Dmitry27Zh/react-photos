@@ -9,6 +9,8 @@ const CATEGORIES = [
   { id: 3, name: 'Архитектура' },
   { id: 4, name: 'Города' },
 ]
+const LIMIT = 3
+const PAGES_COUNT = 3
 
 function App() {
   const [collections, setCollections] = useState([])
@@ -19,7 +21,7 @@ function App() {
   useEffect(() => {
     setIsLoading(true)
     const categoryParam = `${activeCategory ? `category=${activeCategory}` : ''}`
-    const pageParam = `page=${page}&limit=3`
+    const pageParam = `page=${page}&limit=${LIMIT}`
 
     fetch(`https://6594eb1f04335332df81a971.mockapi.io/photos?${pageParam}&${categoryParam}`)
       .then((res) => res.json())
@@ -64,19 +66,20 @@ function App() {
             ))}
       </div>
       <ul className="pagination">
-        {[...Array(5)].map((_, index) => {
-          const currentPage = index + 1
+        {!isLoading &&
+          [...Array(PAGES_COUNT)].map((_, index) => {
+            const currentPage = index + 1
 
-          return (
-            <li
-              key={crypto.randomUUID()}
-              className={currentPage === page ? 'active' : ''}
-              onClick={() => setPage(currentPage)}
-            >
-              {currentPage}
-            </li>
-          )
-        })}
+            return (
+              <li
+                key={crypto.randomUUID()}
+                className={currentPage === page ? 'active' : ''}
+                onClick={() => setPage(currentPage)}
+              >
+                {currentPage}
+              </li>
+            )
+          })}
       </ul>
     </div>
   )
