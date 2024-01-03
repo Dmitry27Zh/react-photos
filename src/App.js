@@ -18,9 +18,10 @@ function App() {
   const [page, setPage] = useState(1)
   useEffect(() => {
     setIsLoading(true)
-    const params = `${activeCategory ? `category=${activeCategory}` : ''}`
+    const categoryParam = `${activeCategory ? `category=${activeCategory}` : ''}`
+    const pageParam = `page=${page}&limit=3`
 
-    fetch(`https://6594eb1f04335332df81a971.mockapi.io/photos?${params}`)
+    fetch(`https://6594eb1f04335332df81a971.mockapi.io/photos?${pageParam}&${categoryParam}`)
       .then((res) => res.json())
       .then((data) => setCollections(data))
       .catch((e) => {
@@ -28,7 +29,7 @@ function App() {
         alert('Error!')
       })
       .finally(() => setIsLoading(false))
-  }, [activeCategory])
+  }, [activeCategory, page])
   const filteredCollections = collections.filter((collection) =>
     collection.name.toLowerCase().includes(search.trim().toLowerCase())
   )
