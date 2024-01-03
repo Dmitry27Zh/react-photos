@@ -2,9 +2,18 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Collection from './components/Collection'
 
+const CATEGORIES = [
+  { id: 1, name: 'Все' },
+  { id: 2, name: 'Море' },
+  { id: 3, name: 'Горы' },
+  { id: 4, name: 'Архитектура' },
+  { id: 5, name: 'Города' },
+]
+
 function App() {
   const [collections, setCollections] = useState([])
   const [search, setSearch] = useState('')
+  const [activeCategory, setActiveCategory] = useState(1)
   useEffect(() => {
     fetch('https://6594eb1f04335332df81a971.mockapi.io/photos')
       .then((res) => res.json())
@@ -23,11 +32,15 @@ function App() {
       <h1>Моя коллекция фотографий</h1>
       <div className="top">
         <ul className="tags">
-          <li className="active">Архитектура</li>
-          <li>Горы</li>
-          <li>Архитектура</li>
-          <li>Архитектура</li>
-          <li>Города</li>
+          {CATEGORIES.map((category) => {
+            const isActive = category.id === activeCategory
+
+            return (
+              <li key={category.id} className={isActive ? 'active' : ''} onClick={() => setActiveCategory(category.id)}>
+                {category.name}
+              </li>
+            )
+          })}
         </ul>
         <input
           className="search-input"
