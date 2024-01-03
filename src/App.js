@@ -15,6 +15,7 @@ function App() {
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [page, setPage] = useState(1)
   useEffect(() => {
     setIsLoading(true)
     const params = `${activeCategory ? `category=${activeCategory}` : ''}`
@@ -62,9 +63,19 @@ function App() {
             ))}
       </div>
       <ul className="pagination">
-        <li>1</li>
-        <li className="active">2</li>
-        <li>3</li>
+        {[...Array(5)].map((_, index) => {
+          const currentPage = index + 1
+
+          return (
+            <li
+              key={crypto.randomUUID()}
+              className={currentPage === page ? 'active' : ''}
+              onClick={() => setPage(currentPage)}
+            >
+              {currentPage}
+            </li>
+          )
+        })}
       </ul>
     </div>
   )
