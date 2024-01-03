@@ -13,9 +13,6 @@ function App() {
         alert('Error!')
       })
   }, [])
-  const photos = [
-    'https://images.unsplash.com/photo-1613310023042-ad79320c00ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bW91bmF0aW5zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-  ]
 
   return (
     <div className="App">
@@ -31,7 +28,9 @@ function App() {
         <input className="search-input" placeholder="Поиск по названию" />
       </div>
       <div className="content">
-        <Collection name="Поход в горы" photos={photos} />
+        {collections.map((collection) => (
+          <Collection key={crypto.randomUUID()} name={collection.name} photos={collection.photos} />
+        ))}
       </div>
       <ul className="pagination">
         <li>1</li>

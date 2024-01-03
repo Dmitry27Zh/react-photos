@@ -3,7 +3,7 @@ const Collection = ({ name, photos }) => {
     <div className="collection">
       <img className="collection__big" src={photos[0]} alt="Item" />
       <div className="collection__bottom">
-        {photos.map((photo) => (
+        {photos.slice(0, 3).map((photo) => (
           <img key={crypto.randomUUID()} className="collection__mini" src={photo} alt="Item" />
         ))}
       </div>
