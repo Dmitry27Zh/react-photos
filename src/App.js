@@ -14,6 +14,9 @@ function App() {
         alert('Error!')
       })
   }, [])
+  const filteredCollections = collections.filter((collection) =>
+    collection.name.toLowerCase().includes(search.trim().toLowerCase())
+  )
 
   return (
     <div className="App">
@@ -34,7 +37,7 @@ function App() {
         />
       </div>
       <div className="content">
-        {collections.map((collection) => (
+        {filteredCollections.map((collection) => (
           <Collection key={crypto.randomUUID()} name={collection.name} photos={collection.photos} />
         ))}
       </div>
